@@ -21,7 +21,7 @@ function App() {
      <Route path='/' element={<HomePage/>}/>
      <Route path='/login' element={<LoginPage/>}/>
      <Route path='/signup' element={<SignupPage/>}/>
-     <Route path='/admin' element={<AdminPage/>}/>
+     <Route path='/admin/*' element={<AdminPage/>}/>
      <Route path='/*' element={<h1>404 not found error</h1>}></Route>
      
      </Routes>
