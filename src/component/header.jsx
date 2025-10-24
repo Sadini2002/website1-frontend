@@ -10,7 +10,7 @@ export default function Header(){
     <nav class="hidden md:flex space-x-6">
       <Link to="/" class="text-gray-600 hover:text-blue-600">Home</Link>
       <Link to="/login" class="text-gray-600 hover:text-blue-600">Login</Link>
-      <Link to="/signup" class="text-gray-600 hover:text-blue-600">Signin</Link>
+      <Link to="/signup" class="text-gray-600 hover:text-blue-600">SignUp</Link>
       <Link to="/admin" class="text-gray-600 hover:text-blue-600">Admin</Link>
     </nav>
     <button class="md:hidden text-gray-600 focus:outline-none">

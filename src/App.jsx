@@ -6,6 +6,7 @@ import SignupPage from './pages/signup'
 import HomePage from './pages/home'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AdminPage from './pages/AdminPage'
+import { Toaster } from 'react-hot-toast'
 
 
 
@@ -16,6 +17,7 @@ function App() {
   return (
     <BrowserRouter>
     <div>
+      <Toaster position='top-right'/>
       <Header></Header>
      <Routes path="/">
      <Route path='/' element={<HomePage/>}/>
