@@ -8,7 +8,7 @@ export default function Header(){
   <div class="container mx-auto px-6 py-3 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-blue-600">MyWebsite</h1>
     <nav class="hidden md:flex space-x-6">
-      <Link to="/" class="text-gray-600 hover:text-blue-600">Home</Link>
+      <Link to="/home" class="text-gray-600 hover:text-blue-600">Home</Link>
       <Link to="/login" class="text-gray-600 hover:text-blue-600">Login</Link>
       <Link to="/signup" class="text-gray-600 hover:text-blue-600">SignUp</Link>
       <Link to="/admin" class="text-gray-600 hover:text-blue-600">Admin</Link>

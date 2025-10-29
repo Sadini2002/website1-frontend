@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
 
   async function handleSubmit(e) {
   e.preventDefault(); // prevent form reload
@@ -14,20 +16,29 @@ const Login = () => {
   console.log("Password:", password);
 
   try {
-    const response = await axios.post("http://localhost:3000/api/users/login", {
+    const response = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/login", {
       email,
       password,
     });
 
     toast.success("Login successful:");
-    console.log( response.data);
-    // You can also handle navigation or state updates here
-    // e.g., navigate("/dashboard");
+    console.log( "login succussfull" , response.data);
+    localStorage.setItem("token", response.data.token);
+
+    
+    if (response.data.user && response.data.user.role) {
+      if (response.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/admin"); // Redirect non-admin users to dashboard as well
+      }
+    } else {
+      // If backend doesn’t send a user object
+      navigate("/admin");
+    }
   } catch (error) {
+    console.error("Login error:", error);
     toast.error("Login failed. Please check your credentials.");
-    console.error( error);
-    // Optional: show an alert or toast message
-    // alert("Login failed. Please check your credentials.");
   }
 }
   return (
