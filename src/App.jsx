@@ -7,6 +7,7 @@ import HomePage from './pages/home'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AdminPage from './pages/AdminPage'
 import { Toaster } from 'react-hot-toast'
+import UserData from './component/userData'
 
 
 
@@ -25,6 +26,7 @@ function App() {
      <Route path='/login' element={<LoginPage/>}/>
      <Route path='/signup' element={<SignupPage/>}/>
      <Route path='/admin/*' element={<AdminPage/>}/>
+     <Route path='/userdata' element={<UserData/>}/>
      
      <Route path='/*' element={<h1>404 not found error</h1>}></Route>
      
@@ -35,3 +37,6 @@ function App() {
 }
 
 export default App
+
+//https://jfynjajzyqdbgilgitbt.supabase.co
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmeW5qYWp6eXFkYmdpbGdpdGJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MzUxMzEsImV4cCI6MjA3NzQxMTEzMX0.6pwr-BZ55xFjzmyxwGWZobQ3VGltGAIwewFwmpxTfdc

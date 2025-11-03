@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,39 +8,31 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-
   async function handleSubmit(e) {
-  e.preventDefault(); // prevent form reload
+    e.preventDefault(); // Prevent page reload
 
-  console.log("Email:", email);
-  console.log("Password:", password);
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/users/login",
+        { email, password }
+      );
 
-  try {
-    const response = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/login", {
-      email,
-      password,
-    });
+      // Store token
+      localStorage.setItem("token", response.data.token);
+      toast.success("Login successful!");
 
-    toast.success("Login successful:");
-    console.log( "login succussfull" , response.data);
-    localStorage.setItem("token", response.data.token);
-
-    
-    if (response.data.user && response.data.user.role) {
-      if (response.data.user.role === "admin") {
-        navigate("/admin");
+      // Redirect based on role
+      if (response.data.user && response.data.user.role ==! "admin") {
+        navigate("/home");
       } else {
-        navigate("/admin"); // Redirect non-admin users to dashboard as well
+        navigate("/admin");
       }
-    } else {
-      // If backend doesn’t send a user object
-      navigate("/admin");
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("Login failed. Please check your credentials.");
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    toast.error("Login failed. Please check your credentials.");
   }
-}
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
@@ -55,8 +47,9 @@ const Login = () => {
       {/* Login card */}
       <div className="relative z-10 w-full max-w-md p-8 bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl">
         <h2 className="text-3xl font-bold text-center text-white mb-6">
-          Welcome Back
+          Login
         </h2>
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-sm text-gray-200 mb-1">Email</label>
@@ -69,6 +62,7 @@ const Login = () => {
               required
             />
           </div>
+
           <div>
             <label className="block text-sm text-gray-200 mb-1">Password</label>
             <input
