@@ -1,8 +1,17 @@
+import axios from "axios"
 import { sampleProducts } from "../../assets/sample"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function AdminProductPage(){
+export default function AdminProductPage()  {
     const {product, setProduct} =useState([sampleProducts])
+    useEffect(
+        ()=>{
+        axios.get(import.meta.env.VITE_BACKEND_URL+"/api/products/").then((res)=>{
+            console.log(res.data)
+            setProduct(res.data)
+        })
+        
+        },[])
     return(
 
         <div className="w-full h-full max-h-full overflow-hidden">
@@ -17,13 +26,8 @@ export default function AdminProductPage(){
                         <th>Actions</th>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>as123</td>
-                        <td>face</td>
-                        <td>Tree</td>
-                        <td>1500</td>
-                        <td>free</td>
-                        </tr>
+                       
+     
                         
                     </tbody>
 
