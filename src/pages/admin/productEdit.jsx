@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/media";
 import axios from "axios";
 
-export default function AddProductPage() {
+export default function EditProductPage() {
   const [productId, setProductId] = useState("");
   const [name, setName] = useState("");
   const [altName, setAltName] = useState([]); // stored as array of strings
@@ -19,7 +19,7 @@ export default function AddProductPage() {
 
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
+  async function updateProduct(e) {
     e.preventDefault();
 
     const token = localStorage.getItem("token");
@@ -92,7 +92,7 @@ export default function AddProductPage() {
     <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-lg animate-fadeIn">
       
       <h2 className="text-2xl font-extrabold text-center bg-gradient-to-r from-green-700 to-green-900 text-transparent bg-clip-text mb-6">
-        Add New Product
+        Edit Product
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -188,8 +188,9 @@ export default function AddProductPage() {
           <button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-6 rounded-lg"
+            onChange={updateProduct}
           >
-            Add Product
+            update Product
           </button>
         </div>
 

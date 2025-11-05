@@ -1,7 +1,7 @@
 //https://jfynjajzyqdbgilgitbt.supabase.co
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmeW5qYWp6eXFkYmdpbGdpdGJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MzUxMzEsImV4cCI6MjA3NzQxMTEzMX0.6pwr-BZ55xFjzmyxwGWZobQ3VGltGAIwewFwmpxTfdc
 // src/assets/sample.js
-export const sampleProducts = [
+/*export const sampleProducts = [
   {
     id: 1,
     name: "Tree Pot",
@@ -18,4 +18,4 @@ export const sampleProducts = [
     description: "Organic fertilizer for garden plants.",
     brand: "EcoGrow",
   },
-];
+];*/

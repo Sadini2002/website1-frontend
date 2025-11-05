@@ -15,10 +15,12 @@ const Login = () => {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/login",
         { email, password }
+        
       );
 
       // Store token
       localStorage.setItem("token", response.data.token);
+      console.log("Received token:", response.data.token);
       toast.success("Login successful!");
 
       // Redirect based on role
