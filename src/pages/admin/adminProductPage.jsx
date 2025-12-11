@@ -1,29 +1,59 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTrashCan } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Fetch products
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "")}/api/products`)
       .then((res) => {
         setProducts(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching products:", err);
+        toast.error("Failed to load products");
       });
   }, []);
 
+  // Delete product
+  function deleteProduct(id) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Admin not logged in");
+      return;
+    }
+
+    axios
+      .delete(
+        `${import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "")}/api/products/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(() => {
+        toast.success("Product deleted successfully");
+
+        // Remove product from UI
+        setProducts((prev) => prev.filter((item) => item._id !== id));
+      })
+      .catch((err) => {
+        console.error("Error deleting product:", err);
+        toast.error("Failed to delete product");
+      });
+  }
+
   return (
     <div className="w-full h-full max-h-full overflow-hidden relative p-6">
-
-      {/* Add Product Button */}
       <Link
         to="/admin/addProduct"
         className="fixed bottom-6 right-6 bg-blue-600 text-white w-14 h-14 rounded-full shadow-lg hover:bg-blue-700 flex items-center justify-center text-3xl"
@@ -31,61 +61,67 @@ export default function AdminProductPage() {
         +
       </Link>
 
-      <table className="w-full text-center border-collapse">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 border">Product ID</th>
-            <th className="p-2 border">Product Image</th>
-            <th className="p-2 border">Product Name</th>
-            <th className="p-2 border">Price (Rs.)</th>
-            <th className="p-2 border">Actions</th>
-          </tr>
-        </thead>
+      {!isLoading ? (
+        <table className="w-full text-center border-collapse">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border">Product ID</th>
+              <th className="p-2 border">Product Image</th>
+              <th className="p-2 border">Product Name</th>
+              <th className="p-2 border">Price (Rs.)</th>
+              <th className="p-2 border">Actions</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {products.length > 0 ? (
-            products.map((item) => (
-              <tr key={item._id} className="hover:bg-gray-100">
-                <td className="p-2 border">{item.productId}</td>
+          <tbody>
+            {products.length > 0 ? (
+              products.map((item) => (
+                <tr key={item._id} className="hover:bg-gray-100">
+                  <td className="p-2 border">{item.productId}</td>
 
-                <td className="p-2 border">
-                  {item.image && item.image.length > 0 ? (
-                    <img
-                      src={item.image[0]}
-                      alt={item.name}
-                      className="w-16 h-16 object-cover mx-auto rounded"
-                    />
-                  ) : (
-                    "No Image"
-                  )}
-                </td>
+                  <td className="p-2 border">
+                    {item.image && item.image.length > 0 ? (
+                      <img
+                        src={item.image[0]}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover mx-auto rounded"
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                  </td>
 
-                <td className="p-2 border">{item.name}</td>
-                <td className="p-2 border">Rs. {item.price}</td>
+                  <td className="p-2 border">{item.name}</td>
+                  <td className="p-2 border">Rs. {item.price}</td>
 
-                <td className="p-2 border">
-                    <div className="flex justify-center item-center gap-4 text-xl">
-                  <FaTrashCan className="text-[20px] text-black-500 mx-2  cursor-pointer" />
-                  <CiEdit className="text-[20px] text-black-500 mx-2 cursor-pointer" onClick={()=>{
-                    navigate("admin/edit-product")
-                  }}/>
-                  </div>
-
-                  
-
-                 
+                  <td className="p-2 border">
+                    <div className="flex justify-center items-center gap-4 text-xl">
+                      <FaTrashCan
+                        className="cursor-pointer text-[20px]"
+                        onClick={() => deleteProduct(item._id)}
+                      />
+                      <CiEdit
+                        className="cursor-pointer text-[20px]"
+                        onClick={() =>
+                          navigate(`/admin/edit-product/${item.productId}`)
+                        }
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="p-4 border" colSpan="5">
+                  No products found.
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td className="p-4 border" colSpan="5">
-                No products found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </div>
   );
 }

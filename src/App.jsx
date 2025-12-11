@@ -13,6 +13,7 @@ import UserData from './component/userData'
 
 
 
+
 function App() {
   
 
@@ -27,6 +28,8 @@ function App() {
      <Route path='/signup' element={<SignupPage/>}/>
      <Route path='/admin/*' element={<AdminPage/>}/>
      <Route path='/userdata' element={<UserData/>}/>
+     
+     
      
      <Route path='/*' element={<h1>404 not found error</h1>}></Route>
      

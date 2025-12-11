@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/media";
 import axios from "axios";
-
 export default function AddProductPage() {
   const [productId, setProductId] = useState("");
   const [name, setName] = useState("");
@@ -68,7 +67,7 @@ export default function AddProductPage() {
       };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "")}/api/products`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/products`,
         productPayload,
         {
           headers: {
