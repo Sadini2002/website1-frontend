@@ -2,34 +2,58 @@ import { Link, Route, Routes } from "react-router-dom";
 import AdminProductPage from "./admin/AdminProductPage";
 import AddproductPage from "./admin/AddproductPage";
 import AdminProductEditPage from "./admin/AdminProductEditPage";
-export default function AdminPage(){
-    return(
-        <div className="w-full h-screen flex">
-            <div className="h-full w-[300px]  flex flex-col">
-                <Link to="/admin/products">Products</Link>
-                <Link to="/admin/user">User</Link>
-                <Link to="/admin/Order">Order</Link>
-                <Link to="/admin/reviews">Review</Link>
-            </div>
-            <div className="h-full w-[calc(100%-300px)]">
-                <Routes path="/">
-                <Route path="/products" element={<AdminProductPage/>}/>
-                <Route path="/user" element={<h1>User</h1>}/>
-                <Route path="/order" element={<h1>Order</h1>}/>
-                <Route path="/reviews" element={<h1>Review</h1>}/>  
-                <Route path="/addProduct" element={<AddproductPage/>}/>
-                <Route path="/edit-product/:id" element={<AdminProductEditPage />} />
-                
-               
+import AdminUserPage from "./admin/AdminUserPage";
 
+export default function AdminPage() {
+  return (
+    <div className="flex h-screen bg-gray-50 font-sans">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white shadow-lg rounded-r-2xl p-6 flex flex-col gap-6">
+        <h2 className="text-2xl font-semibold mb-4">Admin Panel</h2>
+        <Link
+          to="/admin/products"
+          className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          Products
+        </Link>
+        <Link
+          to="/admin/user"
+          className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          Users
+        </Link>
+        <Link
+          to="/admin/order"
+          className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          Orders
+        </Link>
+        <Link
+          to="/admin/reviews"
+          className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          Reviews
+        </Link>
+        
+      </aside>
 
-              </Routes>
-            </div>
-
-
-
+      {/* Main Content */}
+      <main className="flex-1 p-10 overflow-auto">
+        <div className="bg-white rounded-3xl shadow-xl p-8 h-full">
+          <Routes>
+            <Route path="/products" element={<AdminProductPage />} />
+            <Route path="/user" element={<AdminUserPage />} />
+            <Route path="/order" element={<h1 className="text-xl">Orders</h1>} />
+            <Route path="/reviews" element={<h1 className="text-xl">Reviews</h1>} />
+            <Route path="/addProduct" element={<AddproductPage />} />
+            <Route
+              path="/edit-product/:productId"
+              element={<AdminProductEditPage />}
+            />
+            <Route path="/addUser" element={<h1 className="text-xl">Select an option from the sidebar.</h1>} />
+          </Routes>
         </div>
-
-    )
-
+      </main>
+    </div>
+  );
 }

@@ -209,7 +209,7 @@ export default function AdminProductEditPage() {
             </button>
           </div>
         </form>
-      </div>
+      </div>  
     </div>
   );
 }

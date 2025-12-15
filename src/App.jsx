@@ -3,7 +3,7 @@ import './App.css'
 import Header from './component/header'
 import LoginPage from './pages/login'
 import SignupPage from './pages/signup'
-import HomePage from './pages/home'
+import HomePage from './pages/HomePage'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AdminPage from './pages/AdminPage'
 import { Toaster } from 'react-hot-toast'
@@ -22,7 +22,7 @@ function App() {
     <div>
       <Toaster position='top-right'/>
       <Header></Header>
-     <Routes path="/">
+     <Routes path="/" element={<HomePage/>}>
      <Route path='/home' element={<HomePage/>}/>
      <Route path='/login' element={<LoginPage/>}/>
      <Route path='/signup' element={<SignupPage/>}/>

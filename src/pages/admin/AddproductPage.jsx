@@ -67,14 +67,15 @@ export default function AddProductPage() {
       };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/products`,
-        productPayload,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+  `${import.meta.env.VITE_BACKEND_URL}/api/products`,
+  productPayload,
+  {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  }
+);
+
 
       toast.success("Product added successfully!");
       console.log("Response:", res.data);
