@@ -75,6 +75,8 @@ export default function AdminProductPage() {
                   <th className="p-3 border-b font-medium">Image</th>
                   <th className="p-3 border-b font-medium">Name</th>
                   <th className="p-3 border-b font-medium">Price (Rs.)</th>
+                  
+                  <th className="p-3 border-b font-medium">Stock</th>
                   <th className="p-3 border-b font-medium">Actions</th>
                 </tr>
               </thead>
@@ -102,6 +104,8 @@ export default function AdminProductPage() {
 
                       <td className="p-3 border-b">{item.name}</td>
                       <td className="p-3 border-b">Rs. {item.price}</td>
+                      
+                      <td className="p-3 border-b">{item.stock}</td>
 
                       <td className="p-3 border-b">
                         <div className="flex justify-center items-center gap-4 text-xl">
@@ -112,7 +116,9 @@ export default function AdminProductPage() {
                           <CiEdit
                             className="cursor-pointer text-blue-600 hover:text-blue-800 transition-colors"
                             onClick={() =>
-                              navigate(`/admin/edit-product/${item.productId}`)
+                              navigate("/admin/edit-product",{
+                                state:item
+                              })
                             }
                           />
                         </div>
@@ -164,7 +170,9 @@ export default function AdminProductPage() {
                     <CiEdit
                       className="cursor-pointer text-blue-600 hover:text-blue-800 text-xl"
                       onClick={() =>
-                        navigate(`/admin/edit-product/${item.productId}`)
+                        navigate("/admin/edit-product",{
+                          state:item
+                        })
                       }
                     />
                   </div>

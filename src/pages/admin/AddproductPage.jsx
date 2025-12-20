@@ -3,18 +3,17 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/media";
 import axios from "axios";
+
 export default function AddProductPage() {
   const [productId, setProductId] = useState("");
   const [name, setName] = useState("");
-  const [altName, setAltName] = useState([]); // stored as array of strings
+  const [altName, setAltName] = useState([]);
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState([]); // File[] before upload
+  const [image, setImage] = useState([]);
   const [labelPrice, setLabelPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [isAvailable, setIsAvailable] = useState(true);
-
-  
 
   const navigate = useNavigate();
 
@@ -22,180 +21,159 @@ export default function AddProductPage() {
     e.preventDefault();
 
     const token = localStorage.getItem("token");
-    console.log("Admin Token:", token);
-    if (!token) {
-      toast.error("Admin not logged in");
-      return;
+    if (!token) return toast.error("Admin not logged in");
+
+    if (!productId || !name) {
+      return toast.error("Product ID and Name are required");
     }
 
-    if (!name || !productId) {
-      toast.error("Please provide Product ID and Name");
-      return;
-    }
-
-    if (!image || image.length === 0) {
-      toast.error("Please upload at least one image.");
-      return;
-    }
-
-    // Convert numeric fields to numbers and validate
-    const numericPrice = Number(price);
-    const numericLabelPrice = Number(labelPrice);
-    const numericStock = Number(stock);
-
-    if (Number.isNaN(numericPrice) || Number.isNaN(numericLabelPrice) || Number.isNaN(numericStock)) {
-      toast.error("Price, Label Price and Stock must be valid numbers.");
-      return;
+    if (!image.length) {
+      return toast.error("Please upload at least one image");
     }
 
     try {
-      // upload images (mediaUpload should return the uploaded image URL)
-      const uploads = image.map((file) => mediaUpload(file));
-      const imageUrls = await Promise.all(uploads);
+      const imageUrls = await Promise.all(image.map(mediaUpload));
 
-      // Build product payload
-      const productPayload = {
-        productId: productId,
-        name: name,
-        altName: altName, // array
-        price: numericPrice,
-        description: description,
-        image: imageUrls,
-        labalPrice: numericLabelPrice, // note: matches your Mongoose field name
-        stock: numericStock,
-        isAvailable: Boolean(isAvailable),
-      };
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products`,
+        {
+          productId,
+          name,
+          altName,
+          price: Number(price),
+          description,
+          image: imageUrls,
+          labalPrice: Number(labelPrice),
+          stock: Number(stock),
+          isAvailable,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-      const res = await axios.post(
-  `${import.meta.env.VITE_BACKEND_URL}/api/products`,
-  productPayload,
-  {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  }
-);
-
-
-      toast.success("Product added successfully!");
-      console.log("Response:", res.data);
+      toast.success("Product added successfully");
       navigate("/admin/products");
     } catch (err) {
-      console.error("Error adding product:", err);
-      const message = err?.response?.data?.message || err.message || "Error adding product";
-      toast.error(message);
+      toast.error(err?.response?.data?.message || "Failed to add product");
     }
   }
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center bg-gradient-to-br from-green-400 to-green-600 p-6">
-    <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-lg animate-fadeIn">
-      
-      <h2 className="text-2xl font-extrabold text-center bg-gradient-to-r from-green-700 to-green-900 text-transparent bg-clip-text mb-6">
-        Add New Product
-      </h2>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center px-4">
+      <div className="w-full max-w-xl bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-gray-200">
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Header */}
+        <h1 className="text-3xl font-semibold text-gray-900 text-center mb-1">
+          Add Product
+        </h1>
+        <p className="text-sm text-gray-500 text-center mb-8">
+          Create a new product for your store
+        </p>
 
-        <input
-          type="text"
-          placeholder="Product ID"
-          className="input input-bordered w-full"
-          value={productId}
-          onChange={(e) => setProductId(e.target.value)}
-        />
+        <form onSubmit={handleSubmit} className="space-y-5">
 
-        <input
-          type="text"
-          placeholder="Product Name"
-          className="input input-bordered w-full"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+          {/* Product ID */}
+          <Input label="Product ID" value={productId} onChange={setProductId} />
 
-        <input
-          type="text"
-          placeholder="Alt Name (comma separated)"
-          className="input input-bordered w-full"
-          value={altName.join(",")}
-          onChange={(e) =>
-            setAltName(
-              e.target.value
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean)
-            )
-          }
-        />
+          {/* Product Name */}
+          <Input label="Product Name" value={name} onChange={setName} />
 
-        <input
-          type="number"
-          placeholder="Price"
-          className="input input-bordered w-full"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-
-        <textarea
-          placeholder="Description"
-          className="textarea textarea-bordered w-full"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          className="file-input file-input-bordered w-full"
-          onChange={(e) => setImage(Array.from(e.target.files))}
-        />
-
-        <input
-          type="number"
-          placeholder="Label Price"
-          className="input input-bordered w-full"
-          value={labelPrice}
-          onChange={(e) => setLabelPrice(e.target.value)}
-        />
-
-        <input
-          type="number"
-          placeholder="Stock"
-          className="input input-bordered w-full"
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
-        />
-
-        <div className="flex items-center gap-3">
-          <label className="font-medium text-gray-700">Available</label>
-          <input
-            type="checkbox"
-            className="toggle toggle-success"
-            checked={isAvailable}
-            onChange={(e) => setIsAvailable(e.target.checked)}
+          {/* Alt Names */}
+          <Input
+            label="Alternative Names"
+            value={altName.join(",")}
+            onChange={(v) =>
+              setAltName(v.split(",").map(s => s.trim()).filter(Boolean))
+            }
+            placeholder="Comma separated"
           />
-        </div>
 
-        <div className="flex justify-between pt-3">
-          <Link
-            to="/admin/products"
-            className="bg-red-500 hover:bg-red-600 transition text-white font-semibold py-2 px-5 rounded-lg"
-          >
-            Cancel
-          </Link>
+          {/* Price Row */}
+          <div className="grid grid-cols-2 gap-4">
+            <Input label="Price (Rs.)" type="number" value={price} onChange={setPrice} />
+            <Input label="Label Price" type="number" value={labelPrice} onChange={setLabelPrice} />
+          </div>
 
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-6 rounded-lg"
-          >
-            Add Product
-          </button>
-        </div>
+          {/* Description */}
+          <div>
+            <label className="text-sm text-gray-600">Description</label>
+            <textarea
+              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-black focus:outline-none"
+              rows="3"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
 
-      </form>
+          {/* Image Upload */}
+          <div>
+            <label className="text-sm text-gray-600">Product Images</label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => setImage(Array.from(e.target.files))}
+              className="w-full mt-2 text-sm"
+            />
+          </div>
+
+          {/* Stock + Availability */}
+          <div className="flex items-center justify-between">
+            <Input
+              label="Stock"
+              type="number"
+              value={stock}
+              onChange={setStock}
+              small
+            />
+
+            <label className="flex items-center gap-3 text-sm text-gray-700">
+              Available
+              <input
+                type="checkbox"
+                checked={isAvailable}
+                onChange={(e) => setIsAvailable(e.target.checked)}
+                className="toggle toggle-success"
+              />
+            </label>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex justify-between pt-6">
+            <Link
+              to="/admin/products"
+              className="px-6 py-3 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+            >
+              Cancel
+            </Link>
+
+            <button
+              type="submit"
+              className="px-8 py-3 rounded-xl bg-black text-white hover:bg-gray-900 transition"
+            >
+              Add Product
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
-  </div>
-   
+  );
+}
+
+/* Reusable Apple-style input */
+function Input({ label, value, onChange, type = "text", placeholder = "", small }) {
+  return (
+    <div className={small ? "w-32" : ""}>
+      <label className="text-sm text-gray-600">{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-black focus:outline-none"
+      />
+    </div>
   );
 }

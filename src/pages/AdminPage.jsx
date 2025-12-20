@@ -3,6 +3,7 @@ import AdminProductPage from "./admin/AdminProductPage";
 import AddproductPage from "./admin/AddproductPage";
 import AdminProductEditPage from "./admin/AdminProductEditPage";
 import AdminUserPage from "./admin/AdminUserPage";
+import AddUserPage from "./AddUserPage";
 
 export default function AdminPage() {
   return (
@@ -39,7 +40,7 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <main className="flex-1 p-10 overflow-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8 h-full">
+        <div className="bg-white rounded-3xl shadow-xl p-8 ">
           <Routes>
             <Route path="/products" element={<AdminProductPage />} />
             <Route path="/user" element={<AdminUserPage />} />
@@ -47,10 +48,10 @@ export default function AdminPage() {
             <Route path="/reviews" element={<h1 className="text-xl">Reviews</h1>} />
             <Route path="/addProduct" element={<AddproductPage />} />
             <Route
-              path="/edit-product/:productId"
+              path="/edit-product"
               element={<AdminProductEditPage />}
             />
-            <Route path="/addUser" element={<h1 className="text-xl">Select an option from the sidebar.</h1>} />
+            <Route path="/addUser" element={<AddUserPage></AddUserPage>} />
           </Routes>
         </div>
       </main>

@@ -27,12 +27,12 @@ export default function AddUserPage() {
     setLoading(true);
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "")}/api/users`,
+        `${import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "")}/api/users/register`,
         { firstname, lastname, email, password, role, isBlock, img },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("User added successfully");
-      navigate("/admin/users"); // redirect to user list
+      navigate("/admin/user"); // redirect to user list
     } catch (err) {
       console.error("Error adding user:", err);
       toast.error(err.response?.data?.message || "Failed to add user");
@@ -122,3 +122,4 @@ export default function AddUserPage() {
     </div>
   );
 }
+
