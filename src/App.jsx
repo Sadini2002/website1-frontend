@@ -24,7 +24,7 @@ function App() {
       <Toaster position='top-right'/>
       <Header></Header>
      <Routes path="/*" element={<HomePage/>}>
-     <Route path='/home' element={<HomePage/>}/>
+     <Route path='/' element={<HomePage/>}/>
      <Route path='/login' element={<LoginPage/>}/>
      <Route path='/signup' element={<SignupPage/>}/>
      <Route path='/admin/*' element={<AdminPage/>}/>
@@ -34,7 +34,7 @@ function App() {
      
      
      
-     <Route path='/*' element={<HomePage/>}></Route>
+     
      
      </Routes>
     </div>

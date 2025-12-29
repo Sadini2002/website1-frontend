@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
+    <div className="min-h-screen flex md:grid-cols-2">
 
       {/* LEFT SIDE – HERO */}
       <div
