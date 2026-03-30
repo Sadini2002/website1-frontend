@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast'
 import UserData from './component/userData'
 import Home from './pages/home'
 import ProductPage from './client/ProductPage'
+import ProductOverview from './client/productOverview'
 
 
 
@@ -35,6 +36,7 @@ function App() {
      <Route path='/contact' element={<h1>Contact</h1>}/>
      <Route path='/about' element={<h1>About</h1>}/>
      <Route path='/profile' element={<h1>Wishlist</h1>}/>
+     <Route path='/overview/:id' element={<ProductOverview/>}/>
 
      <Route path="/*" element={<h1>404 NOT FOUND</h1>} />
 
