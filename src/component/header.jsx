@@ -9,7 +9,8 @@ export default function Header(){
   const navigate=useNavigate();
   console.log("header rendered");
  return(
-    <header className="w-full  h-[80px] shadow-2xl  flex">
+  <header className="w-full  h-[80px] shadow-2xl  flex">
+    
 
         
   

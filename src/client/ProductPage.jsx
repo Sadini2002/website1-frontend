@@ -18,7 +18,7 @@ export default function ProductPage() {
   }, [isLoading]);
 
   return (
-    <div className="w-full h-full bg-red-900 flex flex-wrap justify-center items-center gap-4 p-4 overflow-auto">
+    <div className="w-full h-full bg-gray-200 flex flex-wrap justify-center items-center gap-4 p-4 overflow-auto">
      {
       products.map((product)=>{
         return(

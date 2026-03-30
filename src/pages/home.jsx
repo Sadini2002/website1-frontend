@@ -7,8 +7,9 @@ export default function Home() {
   return (
     <div className="w-full h-screen flex flex-col items-center">
       
-        <Header></Header>   
+         
       <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
+         <Header></Header> 
         <Routes path="/*">
           <Route path="/" element={<HomePage/>} />
           <Route path="/products" element={<ProductPage />} />

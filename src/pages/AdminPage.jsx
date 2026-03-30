@@ -4,10 +4,14 @@ import AddproductPage from "./admin/AddproductPage";
 import AdminProductEditPage from "./admin/AdminProductEditPage";
 import AdminUserPage from "./admin/AdminUserPage";
 import AddUserPage from "./AddUserPage";
+import Header from "../component/header";
 
 export default function AdminPage() {
   return (
+    <div>
+      
     <div className="flex h-screen bg-gray-50 font-sans">
+      
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-lg rounded-r-2xl p-6 flex flex-col gap-6">
         <h2 className="text-2xl font-semibold mb-4">Admin Panel</h2>
@@ -40,7 +44,10 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <main className="flex-1 p-10 overflow-auto">
+        
         <div className="bg-white rounded-3xl shadow-xl p-8 ">
+          <h1 className="text-2xl font-bold mb-4">Welcome to the Admin Panel</h1>
+          
           <Routes>
             <Route path="/products" element={<AdminProductPage />} />
             <Route path="/user" element={<AdminUserPage />} />
@@ -55,6 +62,7 @@ export default function AdminPage() {
           </Routes>
         </div>
       </main>
+    </div>
     </div>
   );
 }
