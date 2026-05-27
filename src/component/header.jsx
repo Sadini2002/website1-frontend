@@ -1,39 +1,67 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import UserData from "./userData";
+import { useNavigate } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom"
+export default function Header() {
+  const navigate = useNavigate();
 
-
-
-export default function Header(){
-  const navigate=useNavigate();
   console.log("header rendered");
- return(
-  <header className="w-full  h-[80px] shadow-2xl  flex">
-    
 
-        
-  
-    <img onClick={() => navigate("/")} src="/logo.png" alt="logo" className=" h-[80px]  w-[80px] ml-4 mt-2 float-left object-cover cursor-pointer"/>
-    <div className="w-[calc(100%-160px)] h-full bg-red-100  flex justify-center items-center">
-    
-      <Link to="/" className="text-[20px] font-bold mx-2">Home</Link>
-      <Link to="/products" className="text-[20px] font-bold mx-2">Product</Link>
-      <Link to="/contact" className="text-[20px] font-bold mx-2">Contact</Link>
-      <Link to="/about" className="text-[20px] font-bold mx-2">About</Link>
-      <Link to="/profile" className="text-[20px] font-bold mx-2">Wishlist</Link>
-    
-    </div>
-    <div className="w-[80px] bg-blue-600"></div>
-    
-      
-      
-    
-</header>
+  return (
+    <header className="w-full h-[80px] bg-[#9085E4] shadow-xl flex items-center px-4">
 
-  
+      {/* Logo */}
+      <img
+        onClick={() => navigate("/")}
+        src="/logo.png"
+        alt="logo"
+        className="h-[65px] w-[65px] rounded-full object-cover cursor-pointer border-2 border-white hover:scale-105 transition duration-300"
+      />
 
+      {/* Navigation */}
+      <div className="flex-1 h-full flex justify-center items-center gap-6">
 
+        <Link
+          to="/"
+          className="text-white text-[18px] font-semibold hover:text-yellow-200 transition duration-300"
+        >
+          Home
+        </Link>
 
- )
+        <Link
+          to="/products"
+          className="text-white text-[18px] font-semibold hover:text-yellow-200 transition duration-300"
+        >
+          Product
+        </Link>
+
+        <Link
+          to="/contact"
+          className="text-white text-[18px] font-semibold hover:text-yellow-200 transition duration-300"
+        >
+          Contact
+        </Link>
+
+        <Link
+          to="/about"
+          className="text-white text-[18px] font-semibold hover:text-yellow-200 transition duration-300"
+        >
+          About
+        </Link>
+
+        <Link
+          to="/profile"
+          className="text-white text-[18px] font-semibold hover:text-yellow-200 transition duration-300"
+        >
+          Wishlist
+        </Link>
+      </div>
+
+      {/* User Section */}
+      <div className="w-[80px] h-[50px] bg-white rounded-full flex justify-center items-center shadow-md cursor-pointer hover:scale-105 transition duration-300">
+        <UserData />
+      </div>
+
+    </header>
+  );
 }
