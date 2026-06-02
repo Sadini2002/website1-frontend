@@ -1,15 +1,25 @@
 export function getCart() {
   let cart = localStorage.getItem("cart");
-  cart.JSOMN.parse(cart);
+  cart = JSON.parse(cart) ;
 
+  // Fix: use JSON.parse correctly
   if (cart == null) {
     cart = [];
     localStorage.setItem("cart", JSON.stringify(cart));
-  } else {
-    cart = JSON.parse(cart);
-  }
+  } 
 
   return cart;
+}
+
+
+export function removeFromCart(productId) {
+  let cart = getCart();
+
+  const newCart = cart.filter((item) => {
+    return item.productId !== productId;
+  });
+
+  localStorage.setItem("cart", JSON.stringify(newCart));
 }
 
 export function addToCart(product, qty) {
@@ -25,29 +35,20 @@ export function addToCart(product, qty) {
       name: product.name,
       image: product.images[0],
       price: product.price,
-      labelledPrice: product.labelledPrice,
+      
       qty: qty,
     };
   } else {
     const newQty = cart[index].qty + qty;
-    if(newQty<=0){
+
+    if (newQty <= 0) {
       removeFromCart(product.productId);
       return;
-    } else{
-        cart[index].qty = newQty;
+    } else {
+      cart[index].qty = newQty;
     }
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-}   
-
-
-export function removeFromCart(productId) {
-    let cart = getCart();
-    let index = cart.findIndex((item) => {
-        return item.productId === productId;
-    });
-    const newCart = cart.filter((item, i) => {        return i !== index;
-    });
-    localStorage.setItem("cart", JSON.stringify(newCart));
 }
+

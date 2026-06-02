@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import { addToCart, getCart, removeFromCart } from "../utils/cart.js";
 
 export default function ProductOverview() {
   const params = useParams();
@@ -19,7 +20,7 @@ export default function ProductOverview() {
       .then((res) => {
         console.log(res.data);
         setProduct(res.data);
-        setSelectedImage(res.data?.image); // main image default
+        setSelectedImage(res.data?.image);
         setStatus("success");
       })
       .catch((err) => {
@@ -51,7 +52,6 @@ export default function ProductOverview() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9085E4] to-[#b8b0ff] flex justify-center items-center p-6">
-
       <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl overflow-hidden max-w-6xl w-full grid md:grid-cols-2">
 
         {/* IMAGE SECTION */}
@@ -66,10 +66,8 @@ export default function ProductOverview() {
             />
           </div>
 
-          {/* THUMBNAILS (UNDER IMAGE) */}
           <div className="flex gap-3 overflow-x-auto p-2">
 
-            {/* main image thumbnail */}
             {product?.image && (
               <img
                 src={product.image}
@@ -82,7 +80,6 @@ export default function ProductOverview() {
               />
             )}
 
-            {/* extra images (if exist) */}
             {Array.isArray(product?.images) &&
               product.images.map((img, index) => (
                 <img
@@ -117,13 +114,27 @@ export default function ProductOverview() {
           </div>
 
           <div className="flex gap-4 mt-6">
-            <button className="bg-white text-[#9085E4] px-6 py-3 rounded-xl font-semibold hover:scale-105 transition">
+
+            <button
+              className="bg-white text-[#9085E4] px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
+              onClick={() => {
+                
+                console.log("old cart");
+                console.log(getCart());
+                addToCart(product, 1);
+                
+                console.log("new cart");
+                console.log(getCart());
+                toast.success("Added to cart");
+              }}
+            >
               Add to Cart
             </button>
 
             <button className="bg-black/40 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-black/60 transition">
               Buy Now
             </button>
+
           </div>
 
           <div className="mt-8 border-t border-white/20 pt-4 text-white/70">
