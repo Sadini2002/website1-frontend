@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { addToCart, getCart, removeFromCart } from "../utils/cart.js";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductOverview() {
   const params = useParams();
   const productId = params.id;
+  const navigate = useNavigate();
 
   const [status, setStatus] = useState("loading");
   const [product, setProduct] = useState(null);
@@ -116,7 +118,7 @@ export default function ProductOverview() {
           <div className="flex gap-4 mt-6">
 
             <button
-              className="bg-white text-[#9085E4] px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
+              className="bg-white text-[#9085E4] px-6 py-3 rounded-xl font-semibold hover:scale-105 transition cursor-pointer"
               onClick={() => {
                 
                 console.log("old cart");
@@ -126,12 +128,13 @@ export default function ProductOverview() {
                 console.log("new cart");
                 console.log(getCart());
                 toast.success("Added to cart");
+               
               }}
             >
               Add to Cart
             </button>
 
-            <button className="bg-black/40 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-black/60 transition">
+            <button className="bg-black/40 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-black/60 transition cursor-pointer">
               Buy Now
             </button>
 
