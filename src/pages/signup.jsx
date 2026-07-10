@@ -54,7 +54,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#4434be] relative overflow-hidden px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#9085E4] relative overflow-hidden px-4">
 
       {/* Background Glow */}
       <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] bg-pink-300/20 rounded-full blur-3xl"></div>

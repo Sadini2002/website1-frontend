@@ -37,11 +37,8 @@ const Login = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center"
-      style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1920&auto=format&fit=crop')",
-      }}
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center bg-[#9085E4]"
+      
     >
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>

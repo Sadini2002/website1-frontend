@@ -121,7 +121,7 @@ export default function ProductOverview() {
                 
                 console.log("old cart");
                 console.log(getCart());
-                addToCart(product, 1);
+                addToCart(productId, 1);
                 
                 console.log("new cart");
                 console.log(getCart());
