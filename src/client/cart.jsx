@@ -19,6 +19,8 @@ export default function CartPage() {
                             <div className="w-[250px] h-full flex flex-col justify-center items-start pl-4 ">
                                 <h1 className="text-2xl font-bold text-bold">{item.name}</h1>
                                 <p className="text-lg text-bold">{item.productId}</p>
+                                <p className="text-lg text-bold">${item.price.toFixed(2)}</p>
+                                <p className="text-lg text-bold">Quantity: {item.qty}</p>
                             </div>
 
                     </div>
