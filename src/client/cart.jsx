@@ -3,46 +3,27 @@ import { getCart } from "../utils/cart.js";
 import { BiMinus, BiPlus, BiTrash } from "react-icons/bi";
 
 export default function CartPage() {
+
+
   const [cart, setcart] = useState(getCart());
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-gray-200 py-10 px-4">
-      
-      
+    
+    return (
 
-      {/* Cart Items */}
-      <div className="max-w-5xl mx-auto flex flex-col gap-6">
-        {cart.map((item) => {
-          return (
-            <div
-              key={item.productid}
-              className="relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col md:flex-row items-center gap-5 border border-gray-100"
-            >
-              {/* Product Image */}
-              <div className="relative">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-32 h-32 object-cover rounded-2xl shadow-md"
-                />
-
-                {item.labelledPrice > item.price && (
-                  <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                    SALE
-                  </span>
-                )}
-              </div>
-
-              {/* Product Details */}
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {item.name}
-                </h2>
-
-                <p className="text-gray-500 text-sm mt-1">
-                  Product ID: {item.productId}
-                </p>
-
+       <div className="w-full h-full flex flex-col items-center pt-4">
+    
+        {
+            cart.map(
+                (item)=>{
+                    return(
+                        <div key={item.productId} className="w-[600px] h-[100px] rounded-tl-3xl rounded-bl-3xl bg-primary shadow-2xl flex flex-row">
+                            <img src={item.image} alt={item.name} className="w-[100px] h-[100px] object-cover rounded-3xl"/>
+                            <div className="w-[250px] h-full flex flex-col justify-center items-start pl-4 ">
+                                <h1 className="text-2xl font-bold text-bold">{item.name}</h1>
+                                <p className="text-lg text-bold">{item.productId}</p>
+                                <p className="text-lg text-bold">${item.price.toFixed(2)}</p>
+                                <p className="text-lg text-bold">Quantity: {item.qty}</p>
+                            </div>
                 <div className="mt-3">
                   {item.labelledPrice > item.price ? (
                     <div className="flex items-center gap-3">
