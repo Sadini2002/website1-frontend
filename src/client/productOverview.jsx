@@ -2,11 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import { addToCart, getCart } from "../utils/cart.js";
+
+import { addToCart, getCart, removeFromCart } from "../utils/cart.js";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ProductOverview() {
   const params = useParams();
   const productId = params.id;
+  const navigate = useNavigate();
 
   const [status, setStatus] = useState("loading");
   const [product, setProduct] = useState(null);
@@ -132,7 +136,6 @@ export default function ProductOverview() {
 
 
             <button
-              className="bg-white text-[#9085E4] px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
 
               onClick={() => {
 
@@ -155,10 +158,6 @@ export default function ProductOverview() {
             </button>
 
 
-
-            <button
-              className="bg-black/40 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-black/60 transition"
-            >
               Buy Now
             </button>
 
